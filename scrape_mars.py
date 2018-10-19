@@ -21,6 +21,7 @@ def scrape():
     # Latest news
     news_url = 'https://mars.nasa.gov/news/'
     browser.visit(news_url)
+    time.sleep(1)
     
 
     html = browser.html
@@ -37,6 +38,7 @@ def scrape():
     # visit jpl to get spaceimages
     image_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
     browser.visit(image_url)
+    time.sleep(1)
     html = browser.html
     
     image_soup = BeautifulSoup(html, "html.parser")
@@ -52,13 +54,14 @@ def scrape():
     # Mars weather
     weather_url = 'https://twitter.com/MarsWxReport/status/1041843517113475075'
     browser.visit(weather_url )
+    time.sleep(1)
     weather_response = requests.get(weather_url)
     weather_soup = BeautifulSoup(weather_response.text, 'html.parser')
     
     #html = browser.html
     #weather_soup = BeautifulSoup(html, 'html.parser')
     mars_weather = weather_soup.find('title').get_text()
-    mars_weather = mars_weather.split(":",1)[1]
+    mars_weather = mars_weather.split('"')[1]
     
     mars_data["mars_weather"] = mars_weather
     
@@ -83,6 +86,7 @@ def scrape():
         'https://astrogeology.usgs.gov/search/map/Mars/Viking/valles_marineris_enhanced']
     for url in hemisphere_urls:
         browser.visit(url)
+        time.sleep(1)
         
         html = browser.html
         hemisphere_soup = BeautifulSoup(html, 'html.parser')
